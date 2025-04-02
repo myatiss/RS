@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
           
           if (target) {
             const headerHeight = header.offsetHeight;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            const targetPosition = target.offsetTop - headerHeight - -100; // + небольшой отступ
             
             window.scrollTo({
               top: targetPosition,
