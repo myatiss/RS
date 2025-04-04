@@ -12,54 +12,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== Функции =====
   
-  // 1. Прелоадер
+  // 1. Прелоадер (упрощенный)
   const initPreloader = () => {
     setTimeout(() => {
-      preloader.style.opacity = '0';
-      preloader.style.visibility = 'hidden';
-      document.body.style.overflow = 'auto';
-      mainContent.style.display = 'block';
-    }, 6000); // Уменьшил время для лучшего UX
-  };
-
-  // 2. Шапка при скролле с троттлингом
-  const initHeaderScroll = () => {
-    let ticking = false;
-    
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScroll = window.pageYOffset;
-          
-          if (currentScroll > lastScroll && currentScroll > 100) {
-            header.classList.add('scrolled');
-            header.classList.remove('visible');
-          } else {
-            header.classList.add('visible');
-            header.classList.remove('scrolled');
-          }
-          
-          lastScroll = currentScroll;
-          ticking = false;
-        });
-        ticking = true;
+      if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        document.body.style.overflow = 'auto';
       }
-    });
+      if (mainContent) mainContent.style.display = 'block';
+    }, 2000); // Уменьшено время для GitHub Pages
   };
 
-  // 3. Улучшенный плавный скролл
+  // 2. Шапка при скролле (оптимизированная)
+  const initHeaderScroll = () => {
+    if (!header) return;
+    
+    const handleScroll = () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > lastScroll && currentScroll > 100) {
+        header.classList.add('scrolled');
+        header.classList.remove('visible');
+      } else {
+        header.classList.add('visible');
+        header.classList.remove('scrolled');
+      }
+      
+      lastScroll = currentScroll;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  };
+
+  // 3. Плавный скролл (оптимизированный)
   const initSmoothScroll = () => {
+    if (navLinks.length === 0) return;
+    
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         const targetId = link.getAttribute('href');
         
-        if (targetId && targetId !== '#') {
+        if (targetId && targetId.startsWith('#')) {
           e.preventDefault();
           const target = document.querySelector(targetId);
           
           if (target) {
-            const headerHeight = header.offsetHeight;
-            const targetPosition = target.offsetTop - headerHeight - -100; // + небольшой отступ
+            const headerHeight = header ? header.offsetHeight : 0;
+            const targetPosition = target.offsetTop - headerHeight - 20;
             
             window.scrollTo({
               top: targetPosition,
@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Закрытие мобильного меню
-            if (mobileNav.classList.contains('active')) {
-              burger.classList.remove('active');
+            if (mobileNav && mobileNav.classList.contains('active')) {
+              burger?.classList.remove('active');
               mobileNav.classList.remove('active');
               document.body.classList.remove('no-scroll');
             }
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // 4. Бургер-меню с улучшениями
+  // 4. Бургер-меню (оптимизированный)
   const initBurgerMenu = () => {
     if (!burger || !mobileNav) return;
     
@@ -89,16 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Создание кнопки "Связаться" для мобильной версии
-    const mobileContactBtn = document.createElement('a');
-    mobileContactBtn.href = 'application.html';
-    mobileContactBtn.className = 'mobile-contact-btn';
-    mobileContactBtn.textContent = 'Связаться';
-    mobileNav.appendChild(mobileContactBtn);
+    if (!document.querySelector('.mobile-contact-btn')) {
+      const mobileContactBtn = document.createElement('a');
+      mobileContactBtn.href = 'application.html';
+      mobileContactBtn.className = 'mobile-contact-btn';
+      mobileContactBtn.textContent = 'Связаться';
+      mobileNav.appendChild(mobileContactBtn);
+    }
   };
 
-  // 5. Оптимизированная фильтрация портфолио
+  // 5. Фильтрация портфолио (оптимизированная)
   const initPortfolioFilter = () => {
-    if (!filterBtns.length) return;
+    if (filterBtns.length === 0 || portfolioItems.length === 0) return;
     
     filterBtns.forEach(btn => {
       btn.addEventListener('click', function() {
@@ -106,8 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
         this.classList.add('active');
         
         const filterValue = this.dataset.filter;
+        let delay = 0;
         
-        portfolioItems.forEach((item, index) => {
+        portfolioItems.forEach(item => {
           const shouldShow = filterValue === 'all' || item.dataset.category === filterValue;
           
           item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
@@ -121,7 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
               setTimeout(() => {
                 item.style.opacity = '1';
                 item.style.transform = 'translateY(0)';
-              }, 50 * index);
+              }, delay);
+              delay += 50;
             }
           }, 100);
         });
@@ -129,13 +133,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // 6. Автовоспроизведение видео с проверкой
+  // 6. Видео при наведении (оптимизированное)
   const initVideoHover = () => {
+    if (portfolioItems.length === 0) return;
+    
     portfolioItems.forEach(item => {
       const video = item.querySelector('video');
       if (video) {
-        video.muted = true; // Добавляем muted для автовоспроизведения
-        video.playsInline = true; // Для iOS
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = 'metadata'; // Оптимизация загрузки
         
         item.addEventListener('mouseenter', () => {
           video.play().catch(e => console.log('Video play error:', e));
@@ -149,14 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // 7. Анимация при скролле с Intersection Observer
+  // 7. Анимация при скролле (Intersection Observer)
   const initScrollAnimation = () => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
+    if (portfolioItems.length === 0) return;
     
-    const animateElements = (entries, observer) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.style.opacity = '1';
@@ -164,14 +168,18 @@ document.addEventListener('DOMContentLoaded', () => {
           observer.unobserve(entry.target);
         }
       });
-    };
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
     
-    const observer = new IntersectionObserver(animateElements, observerOptions);
     portfolioItems.forEach(item => observer.observe(item));
   };
 
-  // 8. Кнопка "Наверх" с улучшениями
+  // 8. Кнопка "Наверх" (оптимизированная)
   const initScrollToTop = () => {
+    if (document.querySelector('.scroll-to-top')) return;
+    
     const scrollToTopBtn = document.createElement('button');
     scrollToTopBtn.className = 'scroll-to-top';
     scrollToTopBtn.innerHTML = '↑';
@@ -189,12 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    window.addEventListener('scroll', toggleScrollButton);
+    window.addEventListener('scroll', toggleScrollButton, { passive: true });
     toggleScrollButton();
   };
 
   // 9. Инициализация видимого состояния для hover-эффектов
   const initPortfolioHover = () => {
+    if (portfolioItems.length === 0) return;
+    
     document.querySelectorAll('.portfolio-item').forEach((item) => {
       setTimeout(() => {
         item.classList.add('visible');
@@ -202,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // 10. Анимация секции "О себе" с Intersection Observer
+  // 10. Анимация секции "О себе" (оптимизированная)
   const initAboutAnimation = () => {
     const aboutSection = document.querySelector('.about-section');
     if (!aboutSection) return;
@@ -219,36 +229,35 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(aboutSection);
   };
 
-  // 11. Обработчик кнопки play с проверками
+  // 11. Обработчик кнопки play (оптимизированный)
   const initPlayButton = () => {
     const playButton = document.querySelector('.about-media .play-button');
     const video = document.querySelector('.about-media video');
     
-    if (playButton && video) {
-      video.muted = true; // Для автовоспроизведения
-      video.playsInline = true; // Для iOS
-      
-      playButton.addEventListener('click', () => {
-        if (video.paused) {
-          video.play().then(() => {
-            playButton.style.opacity = '0';
-          }).catch(e => {
-            console.error('Video play failed:', e);
-            playButton.style.opacity = '1';
-          });
-        } else {
-          video.pause();
+    if (!playButton || !video) return;
+    
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'metadata';
+    
+    playButton.addEventListener('click', () => {
+      if (video.paused) {
+        video.play().then(() => {
+          playButton.style.opacity = '0';
+        }).catch(e => {
+          console.error('Video play failed:', e);
           playButton.style.opacity = '1';
-        }
-      });
-    }
+        });
+      } else {
+        video.pause();
+        playButton.style.opacity = '1';
+      }
+    });
   };
 
   // ===== Инициализация =====
   const init = () => {
-    if (preloader) {
-      window.addEventListener('load', initPreloader);
-    }
+    initPreloader();
     initHeaderScroll();
     initSmoothScroll();
     initBurgerMenu();
@@ -261,5 +270,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initPlayButton();
   };
 
-  init();
+  // Запуск с проверкой готовности DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 0);
+  }
 });
