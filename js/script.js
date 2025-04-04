@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'auto';
       }
       if (mainContent) mainContent.style.display = 'block';
-    }, 2000); // Уменьшено время для GitHub Pages
+    }, 5500); // Уменьшено время для GitHub Pages
   };
 
   // 2. Шапка при скролле (оптимизированная)
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
           
           if (target) {
             const headerHeight = header ? header.offsetHeight : 0;
-            const targetPosition = target.offsetTop - headerHeight - 20;
+            const targetPosition = target.offsetTop - headerHeight - -100;
             
             window.scrollTo({
               top: targetPosition,
