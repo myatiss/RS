@@ -9,6 +9,7 @@
   text-align: center;
   padding: 100px 0 40px;
   background: linear-gradient(to bottom, #001a33 0%, #0a0a0a 100%);
+  backdrop-filter: blur(20px);
 }
 
 .container {
@@ -60,49 +61,88 @@
   z-index: 1;
   border: 1px solid rgba(0, 150, 255, 0.2);
 }
-  
-  .form-row {
-    display: flex;
-    gap: 30px;
-    margin-bottom: 25px;
+
+.form-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--water-color);
+  background: rgba(0, 150, 255, 0.05);
+}
+
+/* Кастомный стиль для select */
+.form-group select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1) url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Стили для опций */
+.form-group select option {
+  background: rgba(30, 30, 30, 0.95);
+  color: white;
+  padding: 12px 15px;
+}
+
+/* Состояние при фокусе */
+.form-group select:focus {
+  box-shadow: 0 0 0 2px rgba(0, 150, 255, 0.3);
+}
+
+/* Для Firefox */
+@-moz-document url-prefix() {
+  .form-group select {
+    padding-right: 15px; /* Убираем лишний отступ */
   }
-  
-  .form-row .form-group {
-    flex: 1;
+  .form-group select option {
+    background-color: rgba(30, 30, 30, 0.95);
   }
-  
-  .form-group {
-    margin-bottom: 25px;
-  }
-  
-  .form-group label {
-    display: block;
-    color: white;
-    margin-bottom: 10px;
-    font-size: 1rem;
-  }
-  
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--water-color);
-    background: rgba(0, 150, 255, 0.05);
-  }
+}
+
+/* Анимация при наведении */
+.form-group select:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
   
   /* Кнопка отправки */
   .submit-btn {
