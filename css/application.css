@@ -1,0 +1,318 @@
+/* Основные стили */
+.application-main {
+    background: #0a0a0a;
+    color: white;
+  }
+  
+ /* Шапка формы */
+.application-header {
+  text-align: center;
+  padding: 100px 0 40px;
+  background: linear-gradient(to bottom, #001a33 0%, #0a0a0a 100%);
+  backdrop-filter: blur(20px);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100 20px;
+}
+
+.header-content {
+  max-width: 800px; /* Ограничиваем ширину текстового блока */
+  margin: 0 auto; /* Центрируем блок */
+}
+
+.application-title {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: white;
+  position: relative;
+  display: inline-block;
+}
+
+.application-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: var(--water-color);
+  margin: 20px auto;
+}
+
+.application-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Форма */
+.application-form {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 50px;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: -30px auto 80px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(0, 150, 255, 0.2);
+}
+
+.form-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--water-color);
+  background: rgba(0, 150, 255, 0.05);
+}
+
+/* Кастомный стиль для select */
+.form-group select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1) url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Стили для опций */
+.form-group select option {
+  background: rgba(30, 30, 30, 0.95);
+  color: white;
+  padding: 12px 15px;
+}
+
+/* Состояние при фокусе */
+.form-group select:focus {
+  box-shadow: 0 0 0 2px rgba(0, 150, 255, 0.3);
+}
+
+/* Для Firefox */
+@-moz-document url-prefix() {
+  .form-group select {
+    padding-right: 15px; /* Убираем лишний отступ */
+  }
+  .form-group select option {
+    background-color: rgba(30, 30, 30, 0.95);
+  }
+}
+
+/* Анимация при наведении */
+.form-group select:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+  
+  /* Кнопка отправки */
+  .submit-btn {
+    background: var(--water-color);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px;
+  }
+  
+  .submit-btn:hover {
+    background: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 51, 102, 0.3);
+  }
+
+/* Стили подвала */
+.footer {
+  position: relative;
+  padding-bottom: 80px; /* Оставляем место для footer-bottom */
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between; /* Равномерное распределение элементов */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 50px;
+  width: 100%; /* Занимает всю доступную ширину */
+}
+
+.footer-brand {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-logo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+.footer-social {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: var(--accent);
+  transform: translateY(-3px);
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.footer-contacts {
+  flex: 1;
+  min-width: 200px;
+  text-align: right;
+}
+
+.contact-link {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  margin-bottom: 15px;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--accent);
+}
+
+.contact-icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--water-color);
+  margin-left: 12px;
+  order: 1;
+}
+
+.footer-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 0;
+  text-align: center;
+}
+
+.copyright {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    align-items: center; /* Центрируем по горизонтали */
+    gap: 30px;
+    text-align: center; /* Центрируем текст */
+  }
+  
+  .footer-contacts {
+    text-align: center; /* Центрируем контакты */
+    width: 100%;
+  }
+  
+  .contact-link {
+    justify-content: center; /* Центрируем ссылки */
+    flex-direction: column; /* Иконка и текст в колонку */
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .contact-icon {
+    margin: 0 0 8px 0; /* Отступ снизу для иконки */
+    order: 0;
+  }
+  
+  .footer-social {
+    justify-content: center; /* Центрируем соц-иконки */
+    width: 100%;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
